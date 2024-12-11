@@ -477,6 +477,7 @@ static int pivotClose(sqlite3_vtab_cursor *pCur){
     for( i=0; i<tab->nRow_cols; i++ )
       sqlite3_value_free(cur->pivot_key[i]);
     sqlite3_free(cur->pivot_key);
+    cur->pivot_key = 0;
   }
   if( cur->stmt )
     sqlite3_finalize(cur->stmt);
