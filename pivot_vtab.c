@@ -748,7 +748,14 @@ static sqlite3_module pivotModule = {
 #ifdef _WIN32
 __declspec(dllexport)
 #endif
+#ifdef SQLITE_CORE // Statically linking the extension, so use custom entry point
 int sqlite3_pivotvtab_init(
+#else
+/* Keep the default entry point so that SQLite knows how to load the extension
+   even if we rename the resulting library file.
+   Only works as long as other run-time extensions do not do the same. */
+int sqlite3_extension_init(
+#endif
   sqlite3 *db, 
   char **pzErrMsg, 
   const sqlite3_api_routines *pApi
